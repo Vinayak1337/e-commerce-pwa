@@ -1,14 +1,17 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './App/App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter >
+  <StrictMode>
     <App />
-  </React.StrictMode>,
+  </StrictMode>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
