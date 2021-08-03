@@ -1,7 +1,13 @@
 /// <reference types="react-scripts" />
 /// <reference types="firebase" />
 interface AppState {
-    user: firebase.User | null;
+    user: User | null;
+}
+
+interface User {
+    id: string;
+    displayName: string;
+    email: string;
 }
 
 interface DirectoryState {
@@ -34,7 +40,7 @@ interface SignInState {
 }
 
 interface FormInputProps {
-    id?: string;
+    id: string;
     name: string;
     type: string;
     value: string;
@@ -47,6 +53,13 @@ interface ButtonProps {
     type?: "button" | "submit" | "reset" | undefined;
     isGoogle?: boolean;
     onClick?: (event: Event<HTMLInputElement>) => void;
+}
+
+interface SignUpState {
+    displayName: string;
+    email: string;
+    password: string;
+    confirmPassword: SignUpState.password;
 }
 
 interface Item {

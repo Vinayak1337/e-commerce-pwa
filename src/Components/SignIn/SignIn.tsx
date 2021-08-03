@@ -1,5 +1,5 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
-import { signInWithGoogle } from '../../Firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../Firebase/firebase.utils';
 import Button from '../Button/Button';
 import FormInput from '../FormInput/FormInput'
 import './SignIn.scss'
@@ -16,8 +16,16 @@ class SignIn extends Component {
         }
     }
 
-    handleSubmit= (event: FormEvent<HTMLFormElement>) => {
+    handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        const { email, password } = this.state;
+
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+        } catch (error) {
+            console.log(error);
+        }
 
         this.setState({ email: '', password: '' });
     }
@@ -36,8 +44,8 @@ class SignIn extends Component {
 
                 <form onSubmit={this.handleSubmit}>
 
-                    <FormInput type="email" name="email" id="email" label="email" value={this.state.email} handleChange={this.handleChange} required/>
-                    <FormInput type="password" name="password" id="password" label="password" value={this.state.password} handleChange={this.handleChange} required/>
+                    <FormInput type="email" name="email" id="emai-signIn" label="email" value={this.state.email} handleChange={this.handleChange} required/>
+                    <FormInput type="password" name="password" id="password-signIn" label="password" value={this.state.password} handleChange={this.handleChange} required/>
 
                     <div className="buttons">
                     <Button type="submit"> Sign In </Button>

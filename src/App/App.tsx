@@ -5,7 +5,7 @@ import './App.css';
 import Shop from '../Pages/Shop/Shop';
 import Header from '../Components/Header/Header';
 import Authentication from '../Pages/Authentication/Authentication';
-import { auth } from '../Firebase/firebase.utils';
+import { auth, createUser } from '../Firebase/firebase.utils';
 import firebase from "firebase"
 
 class App extends Component {
@@ -19,11 +19,22 @@ class App extends Component {
     }
   }
 
+  get user() {
+    return this.state.user;
+  }
+
   unsubscribeFromAuth: firebase.Unsubscribe | Function = () => {};
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ user });
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (!userAuth) return this.setState({ user: null });
+      const userRef = await createUser(userAuth);
+
+      userRef?.onSnapshot(snapshot => {
+        this.setState({ user: {
+          id: snapshot.id, ...snapshot.data()
+        }})
+      })
     })
   }
   
