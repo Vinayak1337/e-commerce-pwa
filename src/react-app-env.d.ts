@@ -18,6 +18,7 @@ interface AppState {
     user: null | User;
 }
 interface AppProps {
+    user: null | User;
     setUser: (user: User | null) => void;
 }
 
