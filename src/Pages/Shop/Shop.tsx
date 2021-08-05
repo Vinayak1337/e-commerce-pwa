@@ -5,8 +5,8 @@ import { ShopData } from '../../Assets/data';
 class Shop extends Component {
     state: ShopState;
 
-    constructor() {
-        super({});
+    constructor(props: {} | Readonly<{}>) {
+        super(props);
         
         this.state = {
             collection: ShopData

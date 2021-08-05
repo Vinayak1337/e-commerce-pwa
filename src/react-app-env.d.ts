@@ -1,7 +1,24 @@
 /// <reference types="react-scripts" />
 /// <reference types="firebase" />
+/// <reference types="firestore" />
+
+interface RootState {
+    users: UserReducer;
+}
+
+interface UserSnapshot {
+    id: string;
+    data: () => User
+}
+interface UserReducer {
+    user: User;
+}
+
 interface AppState {
-    user: User | null;
+    user: null | User;
+}
+interface AppProps {
+    setUser: (user: User | null) => void;
 }
 
 interface User {

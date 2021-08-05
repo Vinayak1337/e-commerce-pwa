@@ -8,6 +8,7 @@ import './Header.scss'
 import { auth } from '../../Firebase/firebase.utils'
 import { ReactComponent as Login } from '../../Assets/Icons/login.svg'
 import { ReactComponent as Logout } from '../../Assets/Icons/logout.svg'
+import { connect } from 'react-redux'
 
 const Header: FC<HeaderProps> = ({ user }) => {
     return (
@@ -46,4 +47,8 @@ const Header: FC<HeaderProps> = ({ user }) => {
     )
 }
 
-export default Header
+const mapStateToProps = (state: RootState) => ({
+    user: state.users.user
+})
+
+export default connect(mapStateToProps)(Header)
