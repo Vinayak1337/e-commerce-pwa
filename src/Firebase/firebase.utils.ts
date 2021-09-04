@@ -9,7 +9,7 @@ const config = {
     storageBucket: "crwn-clothing-db-ee0e1.appspot.com",
     messagingSenderId: "135378218301",
     appId: "1:135378218301:web:95ea3d45d132bd0c2d6954",
-    measurementId: "G-WF7JMDKTJ0"
+    measurementId: "G-WF7JMDKTJ0",
 };
 
 export const createUser = async (userAuth: firebase.User | null, additionalData?: any) => {

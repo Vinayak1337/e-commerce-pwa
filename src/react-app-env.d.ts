@@ -3,101 +3,101 @@
 /// <reference types="firestore" />
 
 interface RootState {
-    users: UserReducer;
+	users: UserReducer;
 }
 
 interface UserSnapshot {
-    id: string;
-    data: () => User
+	id: string;
+	data: () => User;
 }
 interface UserReducer {
-    user: User;
+	user: User;
 }
 
 interface AppState {
-    user: null | User;
+	user: null | User;
 }
 interface AppProps {
-    user: null | User;
-    setUser: (user: User | null) => void;
+	user: null | User;
+	setUser: (user: User | null) => void;
 }
 
 interface User {
-    id: string;
-    displayName: string;
-    email: string;
+	id: string;
+	displayName: string;
+	email: string;
 }
 
 interface DirectoryState {
-    sections: Item[]
+	sections: Item[];
 }
 
 interface MenuItemProps {
-    section: Item;
+	section: Item;
 }
 
 interface ShopState {
-    collection: ShopDataType[];
+	collection: ShopDataType[];
 }
 
 interface HeaderProps {
-    user: firebase.User | null;
+	user: firebase.User | null;
 }
 interface CollectionPreviewProps {
-    title: string;
-    items: ShopItem[];
+	title: string;
+	items: ShopItem[];
 }
 
 interface CollectionItemProps {
-    item: ShopItem;
+	item: ShopItem;
 }
 
 interface SignInState {
-    email: string;
-    password: string;
+	email: string;
+	password: string;
 }
 
 interface FormInputProps {
-    id: string;
-    name: string;
-    type: string;
-    value: string;
-    label: string;
-    required?: boolean;
-    handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+	id: string;
+	name: string;
+	type: string;
+	value: string;
+	label: string;
+	required?: boolean;
+	handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface ButtonProps {
-    type?: "button" | "submit" | "reset" | undefined;
-    isGoogle?: boolean;
-    onClick?: (event: Event<HTMLInputElement>) => void;
+	type?: 'button' | 'submit' | 'reset' | undefined;
+	isGoogle?: boolean;
+	onClick?: (event: Event<HTMLInputElement>) => void;
 }
 
 interface SignUpState {
-    displayName: string;
-    email: string;
-    password: string;
-    confirmPassword: SignUpState.password;
+	displayName: string;
+	email: string;
+	password: string;
+	confirmPassword: SignUpState.password;
 }
 
 interface Item {
-    title:    string;
-    imageUrl: string;
-    id:       number;
-    linkUrl:  string;
-    size?:    string;
+	title: string;
+	imageUrl: string;
+	id: number;
+	linkUrl: string;
+	size?: string;
 }
 
 interface ShopDataType {
-    id:        number;
-    title:     string;
-    routeName: string;
-    items:     ShopItem[];
+	id: number;
+	title: string;
+	routeName: string;
+	items: ShopItem[];
 }
 
 interface ShopItem {
-    id:       number;
-    name:     string;
-    imageUrl: string;
-    price:    number;
+	id: number;
+	name: string;
+	imageUrl: string;
+	price: number;
 }

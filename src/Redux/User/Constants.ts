@@ -1,5 +1,5 @@
 export const INITIAL_STATE: AppState = {
-    user: null
-}
+	user: null
+};
 
-export const SET_USER = 'SET_USER'; 
+export const SET_USER = 'SET_USER';
