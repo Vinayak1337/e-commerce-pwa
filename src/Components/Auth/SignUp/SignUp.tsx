@@ -1,6 +1,6 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
-import { auth, createUser } from '../../Firebase/firebase.utils';
-import Button from '../Button/Button';
+import { auth, createUser } from '../../../Firebase/firebase.utils';
+import Button from '../../Button/Button';
 import FormInput from '../FormInput/FormInput';
 import './SignUp.scss';
 

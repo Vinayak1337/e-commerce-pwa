@@ -1,6 +1,6 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
-import { auth, signInWithGoogle } from '../../Firebase/firebase.utils';
-import Button from '../Button/Button';
+import { auth, signInWithGoogle } from '../../../Firebase/firebase.utils';
+import Button from '../../Button/Button';
 import FormInput from '../FormInput/FormInput';
 import './SignIn.scss';
 

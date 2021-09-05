@@ -3,13 +3,13 @@ import LandingPage from '../Pages/LandingPage/LandingPage';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import Shop from '../Pages/Shop/Shop';
-import Header from '../Components/Header/Header';
 import Authentication from '../Pages/Authentication/Authentication';
 import { auth, createUser } from '../Firebase/firebase.utils';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { setUser } from '../Redux/User/UserActions';
+import { Header } from '../Components/Header';
 
 class App extends Component<AppProps> {
 	unsubscribeFromAuth: firebase.Unsubscribe | Function = () => {};
@@ -52,7 +52,7 @@ class App extends Component<AppProps> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-	user: state.users.user
+	user: state.userReducer.user
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

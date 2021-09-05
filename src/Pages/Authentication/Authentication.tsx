@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import SignIn from '../../Components/SignIn/SignIn';
-import SignUp from '../../Components/SignUp/SignUp';
+import { SignIn, SignUp } from '../../Components/Auth';
 import './Authentication.scss';
 
 const Authentication: FC = () => {

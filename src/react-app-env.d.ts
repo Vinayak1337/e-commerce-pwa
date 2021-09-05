@@ -3,7 +3,8 @@
 /// <reference types="firestore" />
 
 interface RootState {
-	users: UserReducer;
+	userReducer: UserReducer;
+	cartReducer: CartReducer;
 }
 
 interface UserSnapshot {
@@ -42,6 +43,8 @@ interface ShopState {
 
 interface HeaderProps {
 	user: firebase.User | null;
+	dropdownHidden: boolean;
+	toggleDropdown: () => void;
 }
 interface CollectionPreviewProps {
 	title: string;
@@ -100,4 +103,31 @@ interface ShopItem {
 	name: string;
 	imageUrl: string;
 	price: number;
+}
+
+interface LogoProps {
+	linkTo: string;
+	Icon: ReactComponent;
+	label: string;
+	itemCount?: number;
+	isOption?: boolean;
+	handleClick?: () => void;
+}
+
+interface CartLogoProps {
+	itemCount: number;
+	handleClick: () => void;
+}
+
+interface CartReducerActions {
+	type: 'set_dropdown_visibility';
+}
+
+interface UserReducerActions {
+	type: 'set_user';
+	payload: User | null;
+}
+
+interface CartReducer {
+	dropdownHidden: boolean;
 }

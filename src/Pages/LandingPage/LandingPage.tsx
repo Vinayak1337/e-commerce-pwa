@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Directory from '../../Components/Directory/Directory';
+import { Directory } from '../../Components/LandingPage';
 import './LandingPage.scss';
 
 const LandingPage: FC = () => {
