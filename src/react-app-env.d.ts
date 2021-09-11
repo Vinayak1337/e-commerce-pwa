@@ -53,6 +53,7 @@ interface CollectionPreviewProps {
 
 interface CollectionItemProps {
 	item: ShopItem;
+	addCartItem: (cartItem: CartItem) => void;
 }
 
 interface SignInState {
@@ -73,6 +74,7 @@ interface FormInputProps {
 interface ButtonProps {
 	type?: 'button' | 'submit' | 'reset' | undefined;
 	isGoogle?: boolean;
+	isInverted?: boolean;
 	onClick?: (event: Event<HTMLInputElement>) => void;
 }
 
@@ -86,20 +88,20 @@ interface SignUpState {
 interface Item {
 	title: string;
 	imageUrl: string;
-	id: number;
+	id: string;
 	linkUrl: string;
 	size?: string;
 }
 
 interface ShopDataType {
-	id: number;
+	id: string;
 	title: string;
 	routeName: string;
 	items: ShopItem[];
 }
 
 interface ShopItem {
-	id: number;
+	id: string;
 	name: string;
 	imageUrl: string;
 	price: number;
@@ -119,9 +121,18 @@ interface CartLogoProps {
 	handleClick: () => void;
 }
 
-interface CartReducerActions {
-	type: 'set_dropdown_visibility';
-}
+type CartReducerActions =
+	| {
+			type: 'set_dropdown_visibility';
+		}
+	| {
+			type: 'add_cart_item';
+			payload: CartItem;
+		}
+	| {
+			type: 'remove_cart_item';
+			payload: CartItem;
+		};
 
 interface UserReducerActions {
 	type: 'set_user';
@@ -131,3 +142,7 @@ interface UserReducerActions {
 interface CartReducer {
 	dropdownHidden: boolean;
 }
+
+type CartItem = ShopItem & {
+	quantity: number;
+};
