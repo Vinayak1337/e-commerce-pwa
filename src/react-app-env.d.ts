@@ -155,4 +155,13 @@ interface CartItemProps {
 
 interface CartDropdownProps {
 	items: CartItem[];
+	toggleDropdown: () => void;
+}
+
+interface CheckoutProps {
+	cartItems: CartItem[];
+}
+
+interface CheckoutItemProps {
+	item: CartItem;
 }

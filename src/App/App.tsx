@@ -1,15 +1,19 @@
 import { Component } from 'react';
-import LandingPage from '../Pages/LandingPage/LandingPage';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
-import Shop from '../Pages/Shop/Shop';
-import Authentication from '../Pages/Authentication/Authentication';
 import { auth, createUser } from '../Firebase/firebase.utils';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { setUser } from '../Redux/User/UserActions';
 import { Header } from '../Components/Header';
+import {
+	Authentication,
+	Checkout,
+	ErrorPage,
+	LandingPage,
+	Shop,
+} from '../Pages';
 
 class App extends Component<AppProps> {
 	unsubscribeFromAuth: firebase.Unsubscribe | Function = () => {};
@@ -42,9 +46,10 @@ class App extends Component<AppProps> {
 					<Route
 						exact
 						path="/signin"
-						render={() =>
-							this.props.user ? <Redirect to="/" /> : <Authentication />}
+						render={() => (this.props.user ? <Redirect to="/" /> : <Authentication />)}
 					/>
+					<Route exact path="/checkout" component={Checkout} />
+					<Route component={ErrorPage} />
 				</Switch>
 			</div>
 		);
@@ -52,11 +57,11 @@ class App extends Component<AppProps> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-	user: state.userReducer.user
+	user: state.userReducer.user,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	setUser: (user: any) => dispatch(setUser(user))
+	setUser: (user: any) => dispatch(setUser(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
