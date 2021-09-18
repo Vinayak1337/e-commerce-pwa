@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import './Navbar.scss';
 import { auth } from '../../../Firebase/firebase.utils';
 import { connect } from 'react-redux';
@@ -21,8 +21,10 @@ const Navbar: FC<HeaderProps> = ({
 	dropdownHidden,
 	toggleDropdown,
 }) => {
-	const getItemCount = () =>
-		cartItems.reduce((prevValue, item) => prevValue + item.quantity, 0);
+	const getItemCount = useMemo(
+		() => cartItems.reduce((prevValue, item) => prevValue + item.quantity, 0),
+		[cartItems],
+	);
 
 	return (
 		<div className="header">
@@ -38,9 +40,9 @@ const Navbar: FC<HeaderProps> = ({
 							Icon={LogoutIcon}
 						/>
 					: <Logo linkTo="/signin" label="SIGN IN" Icon={LoginIcon} />}
-				<CartLogo itemCount={getItemCount()} handleClick={toggleDropdown} />
+				<CartLogo itemCount={getItemCount} handleClick={toggleDropdown} />
 			</div>
-			{dropdownHidden && <CartDropdown />}
+			{!dropdownHidden && <CartDropdown />}
 		</div>
 	);
 };
