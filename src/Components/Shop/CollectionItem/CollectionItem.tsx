@@ -18,7 +18,7 @@ const CollectionItem: FC<CollectionItemProps> = ({ item, addCartItem }) => {
 					{name}
 				</span>
 				<span className="price">
-					{price}
+					${price}
 				</span>
 			</div>
 			<Button onClick={handleClick} isInverted>
@@ -29,7 +29,7 @@ const CollectionItem: FC<CollectionItemProps> = ({ item, addCartItem }) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	addCartItem: (cartItem: CartItem) => dispatch(addCartItem(cartItem))
+	addCartItem: (cartItem: CartItem) => dispatch(addCartItem(cartItem)),
 });
 
 export default connect(null, mapDispatchToProps)(CollectionItem);

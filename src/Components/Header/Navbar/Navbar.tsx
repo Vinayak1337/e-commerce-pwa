@@ -7,7 +7,7 @@ import {
 	LoginIcon,
 	HomeIcon,
 	ShoppingBasketIcon,
-	MailIcon
+	MailIcon,
 } from '../../../Assets/Icons';
 import Logo from '../Logo/Logo';
 import CartLogo from '../CartLogo/CartLogo';
@@ -15,7 +15,15 @@ import CartDropdown from '../CartDropdown/CartDropdown';
 import { Dispatch } from 'redux';
 import { toggleDropdown } from '../../../Redux/Cart/CartActions';
 
-const Navbar: FC<HeaderProps> = ({ user, dropdownHidden, toggleDropdown }) => {
+const Navbar: FC<HeaderProps> = ({
+	cartItems,
+	user,
+	dropdownHidden,
+	toggleDropdown,
+}) => {
+	const getItemCount = () =>
+		cartItems.reduce((prevValue, item) => prevValue + item.quantity, 0);
+
 	return (
 		<div className="header">
 			<Logo linkTo="/" Icon={HomeIcon} label="HOME" />
@@ -30,20 +38,21 @@ const Navbar: FC<HeaderProps> = ({ user, dropdownHidden, toggleDropdown }) => {
 							Icon={LogoutIcon}
 						/>
 					: <Logo linkTo="/signin" label="SIGN IN" Icon={LoginIcon} />}
-				<CartLogo itemCount={0} handleClick={toggleDropdown} />
+				<CartLogo itemCount={getItemCount()} handleClick={toggleDropdown} />
 			</div>
-			{!dropdownHidden && <CartDropdown />}
+			{dropdownHidden && <CartDropdown />}
 		</div>
 	);
 };
 
 const mapStateToProps = (state: RootState) => ({
 	user: state.userReducer.user,
-	dropdownHidden: state.cartReducer.dropdownHidden
+	dropdownHidden: state.cartReducer.dropdownHidden,
+	cartItems: state.cartReducer.cartItems,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	toggleDropdown: () => dispatch(toggleDropdown())
+	toggleDropdown: () => dispatch(toggleDropdown()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

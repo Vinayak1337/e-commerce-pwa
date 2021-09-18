@@ -2,12 +2,12 @@ import {
 	ADD_CART_ITEM,
 	CART_INITIAL_STATE,
 	REMOVE_CART_ITEM,
-	SET_DROPDOWN_VISIBILITY
+	SET_DROPDOWN_VISIBILITY,
 } from './CartConstants';
 
 export const cartReducer = (
 	state = CART_INITIAL_STATE,
-	action: CartReducerActions
+	action: CartReducerActions,
 ) => {
 	switch (action.type) {
 		case SET_DROPDOWN_VISIBILITY:
@@ -19,7 +19,7 @@ export const cartReducer = (
 		case REMOVE_CART_ITEM:
 			return {
 				...state,
-				cartItems: removeItemFromCart(state.cartItems, action.payload)
+				cartItems: removeItemFromCart(state.cartItems, action.payload),
 			};
 
 		default:
@@ -30,16 +30,13 @@ export const cartReducer = (
 const addItemToCart = (cartItems: CartItem[], cartItem: CartItem) => {
 	const existtingItem = cartItems.find(item => item.id === cartItem.id);
 
-	if (!existtingItem) {
-		cartItems.push(cartItem);
-		return cartItems;
-	}
+	if (!existtingItem) return [...cartItems, cartItem];
 
 	return cartItems.map(
 		item =>
 			item.id === cartItem.id
 				? { ...cartItem, quantity: item.quantity + cartItem.quantity }
-				: item
+				: item,
 	);
 };
 
@@ -51,6 +48,6 @@ const removeItemFromCart = (cartItems: CartItem[], cartItem: CartItem) =>
 					? item.quantity > 1
 						? { ...cartItem, quantity: item.quantity - cartItem.quantity }
 						: null
-					: item
+					: item,
 		)
 		.filter(item => (!item ? false : item.quantity > 0));

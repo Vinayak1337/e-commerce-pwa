@@ -43,6 +43,7 @@ interface ShopState {
 
 interface HeaderProps {
 	user: firebase.User | null;
+	cartItems: CartItem[];
 	dropdownHidden: boolean;
 	toggleDropdown: () => void;
 }
@@ -141,8 +142,17 @@ interface UserReducerActions {
 
 interface CartReducer {
 	dropdownHidden: boolean;
+	cartItems: CartItem[];
 }
 
 type CartItem = ShopItem & {
 	quantity: number;
 };
+
+interface CartItemProps {
+	item: CartItem;
+}
+
+interface CartDropdownProps {
+	items: CartItem[];
+}
