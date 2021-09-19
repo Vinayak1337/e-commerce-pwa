@@ -5,7 +5,8 @@ import './Checkout.scss';
 
 const Checkout: FC<CheckoutProps> = ({ cartItems }) => {
 	const getTotalPrice = useMemo(
-		() => cartItems.reduce((prevVal, item) => prevVal + item.price, 0),
+		() =>
+			cartItems.reduce((prevVal, item) => prevVal + item.price * item.quantity, 0),
 		[cartItems],
 	);
 

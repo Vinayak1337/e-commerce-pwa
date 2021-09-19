@@ -45,9 +45,7 @@ const removeItemFromCart = (cartItems: CartItem[], cartItem: CartItem) =>
 		.map(
 			item =>
 				item.id === cartItem.id
-					? item.quantity > 1
-						? { ...cartItem, quantity: item.quantity - cartItem.quantity }
-						: null
+					? { ...cartItem, quantity: item.quantity - cartItem.quantity }
 					: item,
 		)
 		.filter(item => (!item ? false : item.quantity > 0));

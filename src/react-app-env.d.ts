@@ -164,4 +164,6 @@ interface CheckoutProps {
 
 interface CheckoutItemProps {
 	item: CartItem;
+	removeCartItem: (item: CartItem) => void;
+	addCartItem: (item: CartItem) => void;
 }
