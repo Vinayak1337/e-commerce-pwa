@@ -5,6 +5,7 @@
 interface RootState {
 	userReducer: UserReducer;
 	cartReducer: CartReducer;
+	shopReducer: ShopReducer;
 }
 
 interface UserSnapshot {
@@ -29,16 +30,18 @@ interface User {
 	email: string;
 }
 
-interface DirectoryState {
-	sections: Item[];
+interface DirectoryProps {
+	sections: Section[];
 }
 
 interface MenuItemProps {
-	section: Item;
+	section: Section;
 }
 
-interface ShopState {
-	collection: ShopDataType[];
+interface ShopProps {}
+
+interface CollectionOverviewProps {
+	collections: Collection[];
 }
 
 interface HeaderProps {
@@ -49,11 +52,11 @@ interface HeaderProps {
 }
 interface CollectionPreviewProps {
 	title: string;
-	items: ShopItem[];
+	items: Item[];
 }
 
 interface CollectionItemProps {
-	item: ShopItem;
+	item: Item;
 	addCartItem: (cartItem: CartItem) => void;
 }
 
@@ -84,28 +87,6 @@ interface SignUpState {
 	email: string;
 	password: string;
 	confirmPassword: SignUpState.password;
-}
-
-interface Item {
-	title: string;
-	imageUrl: string;
-	id: string;
-	linkUrl: string;
-	size?: string;
-}
-
-interface ShopDataType {
-	id: string;
-	title: string;
-	routeName: string;
-	items: ShopItem[];
-}
-
-interface ShopItem {
-	id: string;
-	name: string;
-	imageUrl: string;
-	price: number;
 }
 
 interface LogoProps {
@@ -145,7 +126,7 @@ interface CartReducer {
 	cartItems: CartItem[];
 }
 
-type CartItem = ShopItem & {
+type CartItem = Item & {
 	quantity: number;
 };
 
@@ -166,4 +147,35 @@ interface CheckoutItemProps {
 	item: CartItem;
 	removeCartItem: (item: CartItem) => void;
 	addCartItem: (item: CartItem) => void;
+}
+
+interface ShopReducer {
+	sections: Section[];
+	collections: Collection[];
+}
+
+interface Section {
+	title: string;
+	imageUrl: string;
+	size?: string;
+	id: string;
+	linkUrl: string;
+}
+
+interface Collection {
+	id: string;
+	title: string;
+	routeName: string;
+	items: Item[];
+}
+
+interface Item {
+	id: string;
+	name: string;
+	imageUrl: string;
+	price: number;
+}
+
+interface CollectionProps {
+	collection: Collection | null;
 }

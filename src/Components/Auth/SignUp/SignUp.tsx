@@ -29,10 +29,7 @@ export default class SignUp extends Component {
 		}
 
 		try {
-			const { user } = await auth.createUserWithEmailAndPassword(
-				email,
-				password
-			);
+			const { user } = await auth.createUserWithEmailAndPassword(email, password);
 
 			await createUser(user, { displayName });
 
@@ -55,48 +52,48 @@ export default class SignUp extends Component {
 
 	render() {
 		return (
-			<div className="sign-up">
-				<h2 className="title">Don't have an account?</h2>
+			<div className='sign-up'>
+				<h2 className='title'>Don't have an account?</h2>
 				<span>Sign up now</span>
-				<form onSubmit={this.handleSubmit} className="sign-up-form">
+				<form onSubmit={this.handleSubmit} className='sign-up-form'>
 					<FormInput
-						id="text"
-						type="text"
-						name="displayName"
+						id='text'
+						type='text'
+						name='displayName'
 						value={this.state.displayName}
-						label="display name"
+						label='display name'
 						handleChange={this.handleChange}
 						required
 					/>
 					<FormInput
-						id="email"
-						type="email"
-						name="email"
+						id='email'
+						type='email'
+						name='email'
 						value={this.state.email}
-						label="email"
+						label='email'
 						handleChange={this.handleChange}
 						required
 					/>
 					<FormInput
-						id="password"
-						type="password"
-						name="password"
+						id='password'
+						type='password'
+						name='password'
 						value={this.state.password}
-						label="password"
+						label='password'
 						handleChange={this.handleChange}
 						required
 					/>
 					<FormInput
-						id="confirmPassword"
-						type="password"
-						name="confirmPassword"
+						id='confirmPassword'
+						type='password'
+						name='confirmPassword'
 						value={this.state.confirmPassword}
-						label="confirm password"
+						label='confirm password'
 						handleChange={this.handleChange}
 						required
 					/>
 
-					<Button type="submit">SIGN UP</Button>
+					<Button type='submit'>SIGN UP</Button>
 				</form>
 			</div>
 		);

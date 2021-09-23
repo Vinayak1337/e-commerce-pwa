@@ -2,12 +2,12 @@ import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
 import { persistStore } from 'redux-persist';
 
-import { persistCombiner } from './RootReducer';
+import { persistCombined } from './RootReducer';
 
 const middlewares = [logger];
 
 export const Store = createStore(
-	persistCombiner,
+	persistCombined,
 	applyMiddleware(...middlewares),
 );
 

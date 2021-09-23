@@ -7,20 +7,18 @@ const FormInput: FC<FormInputProps> = ({
 	...inputProps
 }) => {
 	return (
-		<div className="group">
-			<input {...inputProps} className="form-input" onChange={handleChange} />
-			{label
-				? <label
-						className={`${inputProps.value.length
-							? 'shrink'
-							: ''} form-input-label`}
-						htmlFor={label}>
-						{label
-							.split(' ')
-							.map(l => l.charAt(0).toUpperCase() + l.slice(1))
-							.join(' ')}
-					</label>
-				: null}
+		<div className='group'>
+			<input {...inputProps} className='form-input' onChange={handleChange} />
+			{label ? (
+				<label
+					className={`${inputProps.value.length ? 'shrink' : ''} form-input-label`}
+					htmlFor={label}>
+					{label
+						.split(' ')
+						.map(l => l.charAt(0).toUpperCase() + l.slice(1))
+						.join(' ')}
+				</label>
+			) : null}
 		</div>
 	);
 };

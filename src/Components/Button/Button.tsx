@@ -9,9 +9,9 @@ const Button: FC<ButtonProps> = ({
 }) => {
 	return (
 		<button
-			className={`${isGoogle ? 'google' : ''} ${isInverted
-				? 'inverted'
-				: ''} custom-button`}
+			className={`${isGoogle ? 'google' : ''} ${
+				isInverted ? 'inverted' : ''
+			} custom-button`}
 			{...other}>
 			{children}
 		</button>
