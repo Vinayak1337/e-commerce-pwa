@@ -1,5 +1,4 @@
 import { FC, useMemo } from 'react';
-import './Navbar.scss';
 import { auth } from '../../../Firebase/firebase.utils';
 import { connect } from 'react-redux';
 import {
@@ -7,31 +6,32 @@ import {
 	LoginIcon,
 	HomeIcon,
 	ShoppingBasketIcon,
-	MailIcon,
+	MailIcon
 } from '../../../Assets/Icons';
 import Logo from '../Logo/Logo';
 import CartLogo from '../CartLogo/CartLogo';
 import CartDropdown from '../CartDropdown/CartDropdown';
 import { Dispatch } from 'redux';
 import { toggleDropdown } from '../../../Redux/Cart/CartActions';
+import { NavbarContainer, OptionsContainer } from './Navbar.styled';
 
 const Navbar: FC<HeaderProps> = ({
 	cartItems,
 	user,
 	dropdownHidden,
-	toggleDropdown,
+	toggleDropdown
 }) => {
 	const getItemCount = useMemo(
 		() => cartItems.reduce((prevValue, item) => prevValue + item.quantity, 0),
-		[cartItems],
+		[cartItems]
 	);
 
 	return (
-		<div className="header">
+		<NavbarContainer>
 			<Logo linkTo="/" Icon={HomeIcon} label="HOME" />
-			<div className="options">
-				<Logo linkTo="/shop" Icon={ShoppingBasketIcon} label="SHOP" isOption />
-				<Logo linkTo="/contact" Icon={MailIcon} label="CONTACT" isOption />
+			<OptionsContainer>
+				<Logo linkTo="/shop" Icon={ShoppingBasketIcon} label="SHOP" />
+				<Logo linkTo="/contact" Icon={MailIcon} label="CONTACT" />
 				{user
 					? <Logo
 							linkTo="/signin"
@@ -41,20 +41,20 @@ const Navbar: FC<HeaderProps> = ({
 						/>
 					: <Logo linkTo="/signin" label="SIGN IN" Icon={LoginIcon} />}
 				<CartLogo itemCount={getItemCount} handleClick={toggleDropdown} />
-			</div>
+			</OptionsContainer>
 			{!dropdownHidden && <CartDropdown />}
-		</div>
+		</NavbarContainer>
 	);
 };
 
 const mapStateToProps = (state: RootState) => ({
 	user: state.userReducer.user,
 	dropdownHidden: state.cartReducer.dropdownHidden,
-	cartItems: state.cartReducer.cartItems,
+	cartItems: state.cartReducer.cartItems
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	toggleDropdown: () => dispatch(toggleDropdown()),
+	toggleDropdown: () => dispatch(toggleDropdown())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

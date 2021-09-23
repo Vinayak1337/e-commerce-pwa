@@ -93,8 +93,6 @@ interface LogoProps {
 	linkTo: string;
 	Icon: ReactComponent;
 	label: string;
-	itemCount?: number;
-	isOption?: boolean;
 	handleClick?: () => void;
 }
 

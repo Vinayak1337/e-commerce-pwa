@@ -1,18 +1,23 @@
 import { FC } from 'react';
-import { ShoppingBagIcon } from '../../../Assets/Icons';
-import './CartLogo.scss';
+import {
+	CartLabel,
+	CartLogoContainer,
+	CartLogoIcon,
+	CartLogoItems,
+	ItemCountSpan
+} from './CartLogo.styled';
 
 const CartLogo: FC<CartLogoProps> = ({ itemCount, handleClick }) => {
 	return (
-		<div className="cart-logo" onClick={handleClick}>
-			<div className="cart-logo-items">
-				<ShoppingBagIcon className="cart-icon" />
-				<span className="item-count">
+		<CartLogoContainer onClick={handleClick}>
+			<CartLogoItems>
+				<CartLogoIcon />
+				<ItemCountSpan>
 					{itemCount}
-				</span>
-			</div>
-			<p>Cart</p>
-		</div>
+				</ItemCountSpan>
+			</CartLogoItems>
+			<CartLabel>Cart</CartLabel>
+		</CartLogoContainer>
 	);
 };
 

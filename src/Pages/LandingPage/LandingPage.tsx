@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { Directory } from '../../Components/LandingPage';
-import './LandingPage.scss';
+import { HomePageContainer } from './LadingPage.styles';
 
 const LandingPage: FC = () => {
 	return (
-		<div className="landing-page">
+		<HomePageContainer>
 			<Directory />
-		</div>
+		</HomePageContainer>
 	);
 };
 

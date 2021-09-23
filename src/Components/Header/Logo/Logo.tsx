@@ -1,28 +1,17 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import './Logo.scss';
+import { getLogoIcon, LogoContainer, LogoTextParagraph } from './Logo.styled';
 
-const Logo: FC<LogoProps> = ({
-	linkTo,
-	Icon,
-	label,
-	itemCount,
-	isOption,
-	handleClick
-}) => {
+const Logo: FC<LogoProps> = ({ linkTo, Icon, label, handleClick }) => {
+	const LogoComponent = getLogoIcon(Icon);
 	return (
 		<Link to={linkTo} onClick={handleClick}>
-			<div className={`logo ${isOption ? 'option' : ''}`}>
-				<Icon className="logo-icon" />
-				{itemCount !== null
-					? <span className="logo-count">
-							{itemCount}
-						</span>
-					: ''}
-				<p>
+			<LogoContainer>
+				<LogoComponent />
+				<LogoTextParagraph>
 					{label}
-				</p>
-			</div>
+				</LogoTextParagraph>
+			</LogoContainer>
 		</Link>
 	);
 };
