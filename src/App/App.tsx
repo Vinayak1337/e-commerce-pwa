@@ -12,7 +12,7 @@ import {
 	Checkout,
 	ErrorPage,
 	LandingPage,
-	Shop,
+	Shop
 } from '../Pages';
 
 class App extends Component<AppProps> {
@@ -48,7 +48,11 @@ class App extends Component<AppProps> {
 						path="/signin"
 						render={() => (this.props.user ? <Redirect to="/" /> : <Authentication />)}
 					/>
-					<Route exact path="/checkout" component={Checkout} />
+					<Route
+						exact
+						path="/checkout"
+						render={() => (!this.props.user ? <Redirect to="/signin" /> : <Checkout />)}
+					/>
 					<Route component={ErrorPage} />
 				</Switch>
 			</div>
@@ -57,11 +61,11 @@ class App extends Component<AppProps> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-	user: state.userReducer.user,
+	user: state.userReducer.user
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	setUser: (user: any) => dispatch(setUser(user)),
+	setUser: (user: any) => dispatch(setUser(user))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
