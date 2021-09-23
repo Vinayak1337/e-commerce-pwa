@@ -114,6 +114,9 @@ type CartReducerActions =
 	| {
 			type: 'remove_cart_item';
 			payload: CartItem;
+		}
+	| {
+			type: 'clear_cart';
 		};
 
 interface UserReducerActions {
@@ -178,4 +181,9 @@ interface Item {
 
 interface CollectionProps {
 	collection: Collection | null;
+}
+
+interface StripeButtonProps {
+	price: number;
+	clearCart: () => void;
 }

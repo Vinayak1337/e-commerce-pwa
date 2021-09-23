@@ -1,13 +1,14 @@
 import { FC, useMemo } from 'react';
 import { connect } from 'react-redux';
 import CheckoutItem from '../../Components/Checkout/CheckoutItem/CheckoutItem';
+import StripeButton from '../../Components/StripeButton/StripeButton';
 import './Checkout.scss';
 
 const Checkout: FC<CheckoutProps> = ({ cartItems }) => {
 	const getTotalPrice = useMemo(
 		() =>
 			cartItems.reduce((prevVal, item) => prevVal + item.price * item.quantity, 0),
-		[cartItems],
+		[cartItems]
 	);
 
 	return (
@@ -36,12 +37,22 @@ const Checkout: FC<CheckoutProps> = ({ cartItems }) => {
 					TOTAL: ${getTotalPrice}
 				</span>
 			</div>
+			<StripeButton price={getTotalPrice} />
+			<div className="test-warning">
+				*Please use the following test card for payments*
+				<br />
+				Number: 4242 4242 4242 4242
+				<br />
+				Expiry: any future date
+				<br />
+				CVV: any 3 digit number
+			</div>
 		</div>
 	);
 };
 
 const mapStateToProps = (state: RootState) => ({
-	cartItems: state.cartReducer.cartItems,
+	cartItems: state.cartReducer.cartItems
 });
 
 export default connect(mapStateToProps)(Checkout);

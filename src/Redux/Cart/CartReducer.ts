@@ -1,13 +1,14 @@
 import {
 	ADD_CART_ITEM,
 	CART_INITIAL_STATE,
+	CLEAR_CART,
 	REMOVE_CART_ITEM,
-	SET_DROPDOWN_VISIBILITY,
+	SET_DROPDOWN_VISIBILITY
 } from './CartConstants';
 
 export const cartReducer = (
 	state = CART_INITIAL_STATE,
-	action: CartReducerActions,
+	action: CartReducerActions
 ) => {
 	switch (action.type) {
 		case SET_DROPDOWN_VISIBILITY:
@@ -19,7 +20,13 @@ export const cartReducer = (
 		case REMOVE_CART_ITEM:
 			return {
 				...state,
-				cartItems: removeItemFromCart(state.cartItems, action.payload),
+				cartItems: removeItemFromCart(state.cartItems, action.payload)
+			};
+
+		case CLEAR_CART:
+			return {
+				...state,
+				cartItems: []
 			};
 
 		default:
@@ -36,7 +43,7 @@ const addItemToCart = (cartItems: CartItem[], cartItem: CartItem) => {
 		item =>
 			item.id === cartItem.id
 				? { ...cartItem, quantity: item.quantity + cartItem.quantity }
-				: item,
+				: item
 	);
 };
 
@@ -46,6 +53,6 @@ const removeItemFromCart = (cartItems: CartItem[], cartItem: CartItem) =>
 			item =>
 				item.id === cartItem.id
 					? { ...cartItem, quantity: item.quantity - cartItem.quantity }
-					: item,
+					: item
 		)
 		.filter(item => (!item ? false : item.quantity > 0));
