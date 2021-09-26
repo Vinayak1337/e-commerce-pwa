@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import { SignIn, SignUp } from '../../Components/Auth';
-import './Authentication.scss';
+import { AuthContainer, AuthFormsContainer } from './Authentication.styled';
 
 const Authentication: FC = () => {
 	return (
-		<div className="auth">
-			<div className="forms">
+		<AuthContainer>
+			<AuthFormsContainer>
 				<SignIn />
 				<SignUp />
-			</div>
+			</AuthFormsContainer>
 			<p>Note: You can create a fake user.</p>
-		</div>
+		</AuthContainer>
 	);
 };
 

@@ -1,13 +1,17 @@
 import { FC } from 'react';
-import './ErrorPage.scss';
+import {
+	ErrorPageContainer,
+	ErrorPageSpan,
+	ErrorPageText
+} from './ErrorPage.styled';
 
 const ErrorPage: FC = () => {
 	return (
-		<div className="error-page">
-			<p>
-				404<span />Page Not Found
-			</p>
-		</div>
+		<ErrorPageContainer>
+			<ErrorPageText>
+				404<ErrorPageSpan />Page Not Found
+			</ErrorPageText>
+		</ErrorPageContainer>
 	);
 };
 

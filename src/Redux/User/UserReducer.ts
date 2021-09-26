@@ -15,3 +15,8 @@ export const userReducer = (
 			return state;
 	}
 };
+
+interface UserReducerActions {
+	type: 'set_user';
+	payload: User | null;
+}

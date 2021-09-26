@@ -15,7 +15,10 @@ export const cartReducer = (
 			return { ...state, dropdownHidden: !state.dropdownHidden };
 
 		case ADD_CART_ITEM:
-			return { ...state, cartItems: addItemToCart(state.cartItems, action.payload) };
+			return {
+				...state,
+				cartItems: addItemToCart(state.cartItems, action.payload)
+			};
 
 		case REMOVE_CART_ITEM:
 			return {
@@ -56,3 +59,19 @@ const removeItemFromCart = (cartItems: CartItem[], cartItem: CartItem) =>
 					: item
 		)
 		.filter(item => (!item ? false : item.quantity > 0));
+
+type CartReducerActions =
+	| {
+			type: 'set_dropdown_visibility';
+		}
+	| {
+			type: 'add_cart_item';
+			payload: CartItem;
+		}
+	| {
+			type: 'remove_cart_item';
+			payload: CartItem;
+		}
+	| {
+			type: 'clear_cart';
+		};

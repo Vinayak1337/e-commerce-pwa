@@ -2,7 +2,7 @@ import { ChangeEvent, Component, FormEvent } from 'react';
 import { auth, createUser } from '../../../Firebase/firebase.utils';
 import Button from '../../Button/Button';
 import FormInput from '../FormInput/FormInput';
-import './SignUp.scss';
+import { SignUpContainer, SignUpTitle } from './SignUp.styled';
 
 export default class SignUp extends Component {
 	state: SignUpState;
@@ -29,7 +29,10 @@ export default class SignUp extends Component {
 		}
 
 		try {
-			const { user } = await auth.createUserWithEmailAndPassword(email, password);
+			const { user } = await auth.createUserWithEmailAndPassword(
+				email,
+				password
+			);
 
 			await createUser(user, { displayName });
 
@@ -52,8 +55,8 @@ export default class SignUp extends Component {
 
 	render() {
 		return (
-			<div className='sign-up'>
-				<h2 className='title'>Don't have an account?</h2>
+			<SignUpContainer>
+				<SignUpTitle>Don't have an account?</SignUpTitle>
 				<span>Sign up now</span>
 				<form onSubmit={this.handleSubmit} className='sign-up-form'>
 					<FormInput
@@ -95,7 +98,14 @@ export default class SignUp extends Component {
 
 					<Button type='submit'>SIGN UP</Button>
 				</form>
-			</div>
+			</SignUpContainer>
 		);
 	}
+}
+
+interface SignUpState {
+	displayName: string;
+	email: string;
+	password: string;
+	confirmPassword: SignUpState['password'];
 }

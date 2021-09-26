@@ -28,18 +28,20 @@ const Navbar: FC<HeaderProps> = ({
 
 	return (
 		<NavbarContainer>
-			<Logo linkTo="/" Icon={HomeIcon} label="HOME" />
+			<Logo linkTo='/' Icon={HomeIcon} label='HOME' />
 			<OptionsContainer>
-				<Logo linkTo="/shop" Icon={ShoppingBasketIcon} label="SHOP" />
-				<Logo linkTo="/contact" Icon={MailIcon} label="CONTACT" />
-				{user
-					? <Logo
-							linkTo="/signin"
-							handleClick={() => auth.signOut()}
-							label="SIGN OUT"
-							Icon={LogoutIcon}
-						/>
-					: <Logo linkTo="/signin" label="SIGN IN" Icon={LoginIcon} />}
+				<Logo linkTo='/shop' Icon={ShoppingBasketIcon} label='SHOP' />
+				<Logo linkTo='/contact' Icon={MailIcon} label='CONTACT' />
+				{user ? (
+					<Logo
+						linkTo='/signin'
+						handleClick={() => auth.signOut()}
+						label='SIGN OUT'
+						Icon={LogoutIcon}
+					/>
+				) : (
+					<Logo linkTo='/signin' label='SIGN IN' Icon={LoginIcon} />
+				)}
 				<CartLogo itemCount={getItemCount} handleClick={toggleDropdown} />
 			</OptionsContainer>
 			{!dropdownHidden && <CartDropdown />}
@@ -58,3 +60,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+
+interface HeaderProps {
+	user: User | null;
+	cartItems: CartItem[];
+	dropdownHidden: boolean;
+	toggleDropdown: () => void;
+}

@@ -2,7 +2,11 @@ import { ChangeEvent, Component, FormEvent } from 'react';
 import { auth, signInWithGoogle } from '../../../Firebase/firebase.utils';
 import Button from '../../Button/Button';
 import FormInput from '../FormInput/FormInput';
-import './SignIn.scss';
+import {
+	SignInButtonsContainer,
+	SignInContainer,
+	SignInTitle
+} from './SignIn.styled';
 
 class SignIn extends Component {
 	state: SignInState;
@@ -38,8 +42,8 @@ class SignIn extends Component {
 
 	render() {
 		return (
-			<div className='sign-in'>
-				<h2>Already have an account ?</h2>
+			<SignInContainer>
+				<SignInTitle>Already have an account ?</SignInTitle>
 				<span>Sign in now</span>
 
 				<form onSubmit={this.handleSubmit}>
@@ -62,17 +66,22 @@ class SignIn extends Component {
 						required
 					/>
 
-					<div className='buttons'>
+					<SignInButtonsContainer>
 						<Button type='submit'> Sign In </Button>
 						<Button onClick={signInWithGoogle} isGoogle type='button'>
 							{' '}
 							Sign In with Google{' '}
 						</Button>
-					</div>
+					</SignInButtonsContainer>
 				</form>
-			</div>
+			</SignInContainer>
 		);
 	}
 }
 
 export default SignIn;
+
+interface SignInState {
+	email: string;
+	password: string;
+}

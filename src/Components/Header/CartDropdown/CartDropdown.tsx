@@ -5,20 +5,26 @@ import { Dispatch } from 'redux';
 import { toggleDropdown } from '../../../Redux/Cart/CartActions';
 import Button from '../../Button/Button';
 import CartItem from '../CartItem/CartItem';
-import './CartDropdown.scss';
+import {
+	CartDropdownContainer,
+	CartDropdownItemsContainer,
+	EmptyCartLabel
+} from './CartDropdown.styled';
 
 const CartDropdown: FC<CartDropdownProps & RouteComponentProps> = ({
 	items,
 	toggleDropdown,
-	history,
+	history
 }) => {
 	return (
-		<div className="cart-dropdown">
-			<div className="cart-items">
-				{items.length
-					? items.map(item => <CartItem item={item} key={item.id} />)
-					: <span className="empty-cart-message">Your cart is empty</span>}
-			</div>
+		<CartDropdownContainer>
+			<CartDropdownItemsContainer>
+				{items.length ? (
+					items.map(item => <CartItem item={item} key={item.id} />)
+				) : (
+					<EmptyCartLabel>Your cart is empty</EmptyCartLabel>
+				)}
+			</CartDropdownItemsContainer>
 			<Button
 				onClick={() => {
 					history.push('/checkout');
@@ -26,18 +32,23 @@ const CartDropdown: FC<CartDropdownProps & RouteComponentProps> = ({
 				}}>
 				CHECKOUT
 			</Button>
-		</div>
+		</CartDropdownContainer>
 	);
 };
 
 const mapStateToProps = (state: RootState) => ({
-	items: state.cartReducer.cartItems,
+	items: state.cartReducer.cartItems
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	toggleDropdown: () => dispatch(toggleDropdown()),
+	toggleDropdown: () => dispatch(toggleDropdown())
 });
 
 export default withRouter(
-	connect(mapStateToProps, mapDispatchToProps)(CartDropdown),
+	connect(mapStateToProps, mapDispatchToProps)(CartDropdown)
 );
+
+interface CartDropdownProps {
+	items: CartItem[];
+	toggleDropdown: () => void;
+}

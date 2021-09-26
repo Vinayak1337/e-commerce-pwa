@@ -5,7 +5,7 @@ import Collection from '../Collection/Collection';
 
 const Shop: FC<ShopProps & RouteComponentProps> = ({ match }) => {
 	return (
-		<div className="shop-page">
+		<div className='shop-page'>
 			<Route exact path={match.path} component={CollectionOverview} />
 			<Route path={`${match.path}/:collectionId`} component={Collection} />
 		</div>
@@ -13,3 +13,5 @@ const Shop: FC<ShopProps & RouteComponentProps> = ({ match }) => {
 };
 
 export default Shop;
+
+interface ShopProps {}

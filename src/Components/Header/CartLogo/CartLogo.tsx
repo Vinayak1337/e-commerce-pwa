@@ -12,9 +12,7 @@ const CartLogo: FC<CartLogoProps> = ({ itemCount, handleClick }) => {
 		<CartLogoContainer onClick={handleClick}>
 			<CartLogoItems>
 				<CartLogoIcon />
-				<ItemCountSpan>
-					{itemCount}
-				</ItemCountSpan>
+				<ItemCountSpan>{itemCount}</ItemCountSpan>
 			</CartLogoItems>
 			<CartLabel>Cart</CartLabel>
 		</CartLogoContainer>
@@ -22,3 +20,8 @@ const CartLogo: FC<CartLogoProps> = ({ itemCount, handleClick }) => {
 };
 
 export default CartLogo;
+
+interface CartLogoProps {
+	itemCount: number;
+	handleClick: () => void;
+}

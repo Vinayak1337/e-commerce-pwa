@@ -1,15 +1,15 @@
 import { FC } from 'react';
 import { connect } from 'react-redux';
 import MenuItem from '../MenuItem/MenuItem';
-import './Directory.scss';
+import { DirectoryContainer } from './Directory.styled';
 
 const Directory: FC<DirectoryProps> = ({ sections }) => {
 	return (
-		<div className='directory-menu'>
+		<DirectoryContainer>
 			{sections.map(section => {
 				return <MenuItem key={section.id} section={section} />;
 			})}
-		</div>
+		</DirectoryContainer>
 	);
 };
 
@@ -18,3 +18,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 export default connect(mapStateToProps)(Directory);
+
+interface DirectoryProps {
+	sections: Section[];
+}

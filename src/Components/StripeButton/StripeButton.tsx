@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout';
 import { Dispatch } from 'redux';
 import { clearCart } from '../../Redux/Cart/CartActions';
-import './StripeButton.scss';
 
 const StripeButton: FC<StripeButtonProps> = ({ price, clearCart }) => {
 	const priceForStripe = price * 100;
@@ -18,14 +17,14 @@ const StripeButton: FC<StripeButtonProps> = ({ price, clearCart }) => {
 
 	return (
 		<StripeCheckout
-			label="Pay Now"
-			name="CRWN Clothing Ltd."
+			label='Pay Now'
+			name='CRWN Clothing Ltd.'
 			billingAddress
 			shippingAddress
-			image="https://svgshare.com/i/CUz.svg"
+			image='https://svgshare.com/i/CUz.svg'
 			description={`Your total is $${price}`}
 			amount={priceForStripe}
-			panelLabel="Pay Now"
+			panelLabel='Pay Now'
 			token={onToken}
 			stripeKey={publishKey}
 		/>
@@ -37,3 +36,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(StripeButton);
+
+interface StripeButtonProps {
+	price: number;
+	clearCart: () => void;
+}

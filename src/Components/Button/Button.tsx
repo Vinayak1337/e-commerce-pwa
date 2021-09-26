@@ -1,21 +1,8 @@
 import { FC } from 'react';
-import './Button.scss';
+import { StyledButton } from './Button.styled';
 
-const Button: FC<ButtonProps> = ({
-	children,
-	isInverted,
-	isGoogle,
-	...other
-}) => {
-	return (
-		<button
-			className={`${isGoogle ? 'google' : ''} ${
-				isInverted ? 'inverted' : ''
-			} custom-button`}
-			{...other}>
-			{children}
-		</button>
-	);
+const Button: FC<ButtonProps> = ({ children, ...otherProps }) => {
+	return <StyledButton {...otherProps}>{children}</StyledButton>;
 };
 
 export default Button;

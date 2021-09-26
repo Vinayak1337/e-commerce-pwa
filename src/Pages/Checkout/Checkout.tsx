@@ -2,43 +2,52 @@ import { FC, useMemo } from 'react';
 import { connect } from 'react-redux';
 import CheckoutItem from '../../Components/Checkout/CheckoutItem/CheckoutItem';
 import StripeButton from '../../Components/StripeButton/StripeButton';
-import './Checkout.scss';
+import {
+	CheckoutContainer,
+	CheckoutHeader,
+	CheckoutHeaderBlock,
+	CheckoutTotalContainer,
+	CheckoutTestWarning
+} from './Checkout.styled';
 
 const Checkout: FC<CheckoutProps> = ({ cartItems }) => {
 	const getTotalPrice = useMemo(
 		() =>
-			cartItems.reduce((prevVal, item) => prevVal + item.price * item.quantity, 0),
+			cartItems.reduce(
+				(prevVal, item) => prevVal + item.price * item.quantity,
+				0
+			),
 		[cartItems]
 	);
 
 	return (
-		<div className="checkout-page">
-			<div className="checkout-header">
-				<div className="header-block">
+		<CheckoutContainer>
+			<CheckoutHeader>
+				<CheckoutHeaderBlock>
 					<span>Product</span>
-				</div>
-				<div className="header-block">
+				</CheckoutHeaderBlock>
+				<CheckoutHeaderBlock>
 					<span>Description</span>
-				</div>
-				<div className="header-block">
+				</CheckoutHeaderBlock>
+				<CheckoutHeaderBlock>
 					<span>Quantity</span>
-				</div>
-				<div className="header-block">
+				</CheckoutHeaderBlock>
+				<CheckoutHeaderBlock>
 					<span>Price</span>
-				</div>
-				<div className="header-block">
+				</CheckoutHeaderBlock>
+				<CheckoutHeaderBlock>
 					<span>Remove</span>
-				</div>
-			</div>
-			{cartItems.map(item => <CheckoutItem item={item} key={item.id} />)}
+				</CheckoutHeaderBlock>
+			</CheckoutHeader>
+			{cartItems.map(item => (
+				<CheckoutItem item={item} key={item.id} />
+			))}
 
-			<div className="total">
-				<span>
-					TOTAL: ${getTotalPrice}
-				</span>
-			</div>
+			<CheckoutTotalContainer>
+				<span>TOTAL: ${getTotalPrice}</span>
+			</CheckoutTotalContainer>
 			<StripeButton price={getTotalPrice} />
-			<div className="test-warning">
+			<CheckoutTestWarning>
 				*Please use the following test card for payments*
 				<br />
 				Number: 4242 4242 4242 4242
@@ -46,8 +55,8 @@ const Checkout: FC<CheckoutProps> = ({ cartItems }) => {
 				Expiry: any future date
 				<br />
 				CVV: any 3 digit number
-			</div>
-		</div>
+			</CheckoutTestWarning>
+		</CheckoutContainer>
 	);
 };
 
@@ -56,3 +65,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 export default connect(mapStateToProps)(Checkout);
+
+interface CheckoutProps {
+	cartItems: CartItem[];
+}

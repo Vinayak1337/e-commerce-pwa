@@ -1,22 +1,29 @@
 import { FC } from 'react';
-import './CartItem.scss';
+import {
+	CartItemContainer,
+	CartItemImage,
+	CartItemDetails,
+	CartItemLabel
+} from './CartItem.styled';
 
 const CartItem: FC<CartItemProps> = ({
-	item: { imageUrl, price, name, quantity },
+	item: { imageUrl, price, name, quantity }
 }) => {
 	return (
-		<div className="cart-item">
-			<img src={imageUrl} alt={name} />
-			<div className="cart-item-details">
-				<span className="cart-item-name">
-					{name}
-				</span>
-				<span className="cart-item-price">
+		<CartItemContainer>
+			<CartItemImage src={imageUrl} alt={name} />
+			<CartItemDetails>
+				<CartItemLabel>{name}</CartItemLabel>
+				<CartItemLabel>
 					${price} x {quantity}
-				</span>
-			</div>
-		</div>
+				</CartItemLabel>
+			</CartItemDetails>
+		</CartItemContainer>
 	);
 };
 
 export default CartItem;
+
+interface CartItemProps {
+	item: CartItem;
+}

@@ -2,7 +2,16 @@ import { FC } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { addCartItem, removeCartItem } from '../../../Redux/Cart/CartActions';
-import './CheckoutItem.scss';
+import {
+	CheckoutItemContainer,
+	CheckoutItemImageContainer,
+	CheckoutItemImage,
+	CheckoutItemLabel,
+	CheckoutItemQuantity,
+	CheckoutItemArrow,
+	CheckoutItemValue,
+	CheckoutItemRemoveButton
+} from './CheckoutItem.stled';
 
 const CheckoutItem: FC<CheckoutItemProps> = ({
 	item,
@@ -18,25 +27,25 @@ const CheckoutItem: FC<CheckoutItemProps> = ({
 	const { imageUrl, name, quantity, price } = item;
 
 	return (
-		<div className='checkout-item'>
-			<div className='image-container'>
-				<img src={imageUrl} alt='item' />
-			</div>
-			<span className='name'>{name}</span>
-			<span className='quantity'>
-				<div className='arrow' onClick={handleClickRemoveOne}>
+		<CheckoutItemContainer>
+			<CheckoutItemImageContainer>
+				<CheckoutItemImage src={imageUrl} alt='item' />
+			</CheckoutItemImageContainer>
+			<CheckoutItemLabel>{name}</CheckoutItemLabel>
+			<CheckoutItemQuantity>
+				<CheckoutItemArrow onClick={handleClickRemoveOne}>
 					&#10094;
-				</div>
-				<span className='value'>{quantity}</span>
-				<div className='arrow' onClick={handleClickAddOne}>
+				</CheckoutItemArrow>
+				<CheckoutItemValue>{quantity}</CheckoutItemValue>
+				<CheckoutItemArrow onClick={handleClickAddOne}>
 					&#10095;
-				</div>
-			</span>
-			<span className='price'>{price}</span>
-			<div className='remove-button' onClick={handleClickRemove}>
+				</CheckoutItemArrow>
+			</CheckoutItemQuantity>
+			<CheckoutItemLabel>{price}</CheckoutItemLabel>
+			<CheckoutItemRemoveButton onClick={handleClickRemove}>
 				&#10006;
-			</div>
-		</div>
+			</CheckoutItemRemoveButton>
+		</CheckoutItemContainer>
 	);
 };
 
@@ -46,3 +55,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(CheckoutItem);
+
+interface CheckoutItemProps {
+	item: CartItem;
+	removeCartItem: (item: CartItem) => void;
+	addCartItem: (item: CartItem) => void;
+}

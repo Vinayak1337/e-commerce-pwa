@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { connect } from 'react-redux';
 import { CollectionPreview } from '..';
+import { CollectionOverviewContainer } from './CollectionOverview.styled';
 
 const CollectionOverview: FC<CollectionOverviewProps> = ({ collections }) => {
 	return (
-		<div className='collection-overview'>
+		<CollectionOverviewContainer>
 			{collections.map(collection => {
 				return (
 					<CollectionPreview
@@ -14,7 +15,7 @@ const CollectionOverview: FC<CollectionOverviewProps> = ({ collections }) => {
 					/>
 				);
 			})}
-		</div>
+		</CollectionOverviewContainer>
 	);
 };
 
@@ -23,3 +24,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 export default connect(mapStateToProps)(CollectionOverview);
+
+interface CollectionOverviewProps {
+	collections: Collection[];
+}
