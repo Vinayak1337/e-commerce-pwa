@@ -1,13 +1,12 @@
 import { FC, FunctionComponent, SVGProps } from 'react';
 import { Link } from 'react-router-dom';
-import { getLogoIcon, LogoContainer, LogoTextParagraph } from './Logo.styled';
+import { LogoIcon, LogoContainer, LogoTextParagraph } from './Logo.styled';
 
 const Logo: FC<LogoProps> = ({ linkTo, Icon, label, handleClick }) => {
-	const LogoComponent = getLogoIcon(Icon);
 	return (
 		<Link to={linkTo} onClick={handleClick}>
 			<LogoContainer>
-				<LogoComponent />
+				<LogoIcon as={Icon} />
 				<LogoTextParagraph>{label}</LogoTextParagraph>
 			</LogoContainer>
 		</Link>

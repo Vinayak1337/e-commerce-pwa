@@ -18,15 +18,15 @@ class App extends Component<AppProps> {
 	unsubscribeFromAuth: firebase.Unsubscribe | Function = () => {};
 
 	componentDidMount() {
-		const setCurrentUser = this.props.setUser;
+		const { setUser } = this.props;
 		this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-			if (!userAuth) return setCurrentUser(userAuth);
+			if (!userAuth) return setUser(userAuth);
 			const userRef = await createUser(userAuth);
 
 			if (!userRef) return;
 			userRef.onSnapshot(snapshot => {
 				const user = { id: snapshot.id, ...snapshot.data() } as User;
-				return setCurrentUser(user);
+				return setUser(user);
 			});
 		});
 	}
@@ -64,7 +64,8 @@ class App extends Component<AppProps> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-	user: state.userReducer.user
+	user: state.userReducer.user,
+	sections: state.shopReducer.sections,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -75,5 +76,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 interface AppProps {
 	user: null | User;
+	sections: Section[];
 	setUser: (user: User | null) => void;
 }

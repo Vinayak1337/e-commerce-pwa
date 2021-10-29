@@ -29,13 +29,13 @@ const Collection: FC<CollectionRCProps & CollectionProps> = ({
 	);
 };
 
-const mapStateToProps = (state: RootState, props: CollectionRCProps) => ({
-	collection:
-		state.shopReducer.collections.find(
-			collection =>
-				collection.title.toLowerCase() === props.match.params.collectionId
-		) || null
-});
+const mapStateToProps = (state: RootState, props: CollectionRCProps) => {
+	const id = props.match.params.collectionId;
+
+	const collections = state.shopReducer.collections;
+	if (!collections) return null;
+	return { collection: collections[id] };
+};
 
 export default connect(mapStateToProps)(Collection);
 

@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import CollectionItem from '../CollectionItem/CollectionItem';
 import {
 	CollectionPreviewBody,
@@ -9,7 +10,9 @@ import {
 const CollectionPreview: FC<CollectionPreviewProps> = ({ title, items }) => {
 	return (
 		<CollectionPreviewContainer>
-			<CollectionPreviewTitle>{title.toUpperCase()}</CollectionPreviewTitle>
+			<CollectionPreviewTitle as={Link} to={`/shop/${title.toLowerCase()}`}>
+				{title.toUpperCase()}
+			</CollectionPreviewTitle>
 			<CollectionPreviewBody>
 				{items
 					.filter((_item, index) => index < 4)

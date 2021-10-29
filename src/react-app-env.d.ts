@@ -38,7 +38,7 @@ type CartItem = Item & {
 
 interface ShopReducer {
 	sections: Section[];
-	collections: Collection[];
+	collections: null | Collections;
 }
 
 interface Section {
@@ -61,4 +61,13 @@ interface Item {
 	name: string;
 	imageUrl: string;
 	price: number;
+}
+
+interface Collections {
+	[x: string]: {
+		routeName: string;
+		title: string;
+		items: Item[];
+		id: string;
+	};
 }

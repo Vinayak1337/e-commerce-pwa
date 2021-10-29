@@ -9,6 +9,7 @@ export const CollectionPreviewContainer = styled.div`
 export const CollectionPreviewTitle = styled.h1`
 	font-size: 28px;
 	margin-bottom: 25px;
+	font-weight: 1000;
 `;
 
 export const CollectionPreviewBody = styled.div`

@@ -1,3 +1,6 @@
-export const SET_COLLECTION = 'set_collection';
+import { UPDATE_COLLECTION } from './ShopConstants';
 
-export const SET_SECTIONS = 'set_sections';
+export const updateCollection = (collections: Collections) => ({
+	type: UPDATE_COLLECTION,
+	payload: collections
+});

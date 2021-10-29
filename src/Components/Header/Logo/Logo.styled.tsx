@@ -10,9 +10,11 @@ export const LogoContainer = styled.div`
 	flex-direction: column;
 `;
 
-export const getLogoIcon = (Logo: any) => styled(Logo)`
-    width: 38px;
-    height: 38px;
+export const LogoIcon = styled.div`
+	width: 38px;
+	height: 38px;
 `;
 
-export const LogoTextParagraph = styled.p`margin: 0;`;
+export const LogoTextParagraph = styled.p`
+	margin: 0;
+`;
