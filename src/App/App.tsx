@@ -1,10 +1,8 @@
 import { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { auth, createUser } from '../Firebase/firebase.utils';
-import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { setUser } from '../Redux/User/UserActions';
+import { hasSession } from '../Redux/User/User.Actions';
 import { Header } from '../Components/Header';
 import {
 	Authentication,
@@ -15,24 +13,8 @@ import {
 } from '../Pages';
 
 class App extends Component<AppProps> {
-	unsubscribeFromAuth: firebase.Unsubscribe | Function = () => {};
-
 	componentDidMount() {
-		const { setUser } = this.props;
-		this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-			if (!userAuth) return setUser(userAuth);
-			const userRef = await createUser(userAuth);
-
-			if (!userRef) return;
-			userRef.onSnapshot(snapshot => {
-				const user = { id: snapshot.id, ...snapshot.data() } as User;
-				return setUser(user);
-			});
-		});
-	}
-
-	componentWillUnmount() {
-		this.unsubscribeFromAuth();
+		this.props.hasSession();
 	}
 
 	render() {
@@ -65,11 +47,11 @@ class App extends Component<AppProps> {
 
 const mapStateToProps = (state: RootState) => ({
 	user: state.userReducer.user,
-	sections: state.shopReducer.sections,
+	sections: state.shopReducer.sections
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	setUser: (user: any) => dispatch(setUser(user))
+	hasSession: () => dispatch(hasSession())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
@@ -77,5 +59,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 interface AppProps {
 	user: null | User;
 	sections: Section[];
-	setUser: (user: User | null) => void;
+	hasSession: () => void;
 }

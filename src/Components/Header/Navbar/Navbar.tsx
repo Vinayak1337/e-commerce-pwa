@@ -1,5 +1,4 @@
 import { FC, useMemo } from 'react';
-import { auth } from '../../../Firebase/firebase.utils';
 import { connect } from 'react-redux';
 import {
 	LogoutIcon,
@@ -12,14 +11,16 @@ import Logo from '../Logo/Logo';
 import CartLogo from '../CartLogo/CartLogo';
 import CartDropdown from '../CartDropdown/CartDropdown';
 import { Dispatch } from 'redux';
-import { toggleDropdown } from '../../../Redux/Cart/CartActions';
+import { toggleDropdown } from '../../../Redux/Cart/Cart.Actions';
 import { NavbarContainer, OptionsContainer } from './Navbar.styled';
+import { signOutStart } from '../../../Redux/User/User.Actions';
 
 const Navbar: FC<HeaderProps> = ({
 	cartItems,
 	user,
 	dropdownHidden,
-	toggleDropdown
+	toggleDropdown,
+	signOut
 }) => {
 	const getItemCount = useMemo(
 		() => cartItems.reduce((prevValue, item) => prevValue + item.quantity, 0),
@@ -35,7 +36,7 @@ const Navbar: FC<HeaderProps> = ({
 				{user ? (
 					<Logo
 						linkTo='/signin'
-						handleClick={() => auth.signOut()}
+						handleClick={signOut}
 						label='SIGN OUT'
 						Icon={LogoutIcon}
 					/>
@@ -56,7 +57,8 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	toggleDropdown: () => dispatch(toggleDropdown())
+	toggleDropdown: () => dispatch(toggleDropdown()),
+	signOut: () => dispatch(signOutStart())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
@@ -65,5 +67,6 @@ interface HeaderProps {
 	user: User | null;
 	cartItems: CartItem[];
 	dropdownHidden: boolean;
+	signOut: () => void;
 	toggleDropdown: () => void;
 }

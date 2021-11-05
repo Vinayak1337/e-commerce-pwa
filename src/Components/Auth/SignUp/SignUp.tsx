@@ -1,111 +1,97 @@
-import { ChangeEvent, Component, FormEvent } from 'react';
-import { auth, createUser } from '../../../Firebase/firebase.utils';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { signUpStart } from '../../../Redux/User/User.Actions';
 import Button from '../../Button/Button';
 import FormInput from '../FormInput/FormInput';
 import { SignUpContainer, SignUpTitle } from './SignUp.styled';
 
-export default class SignUp extends Component {
-	state: SignUpState;
+const SignUp: FC<SignUpProps> = ({ emailSignUpStart }) => {
+	const [state, setState] = useState<SignUpState>({
+		displayName: '',
+		email: '',
+		password: '',
+		confirmPassword: ''
+	});
 
-	constructor(props: {} | Readonly<{}>) {
-		super(props);
-
-		this.state = {
-			displayName: '',
-			email: '',
-			password: '',
-			confirmPassword: ''
-		};
-	}
-
-	handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		const { displayName, email, password, confirmPassword } = this.state;
+		const { displayName, email, password, confirmPassword } = state;
 
-		if (password !== confirmPassword) {
-			alert('Passwords do not match');
-			return;
-		}
+		if (password !== confirmPassword) return alert('Passwords do not match');
 
-		try {
-			const { user } = await auth.createUserWithEmailAndPassword(
-				email,
-				password
-			);
-
-			await createUser(user, { displayName });
-
-			this.setState({
-				displayName: '',
-				email: '',
-				password: '',
-				confirmPassword: ''
-			});
-		} catch (error) {
-			console.log(error);
-		}
+		emailSignUpStart({ displayName, email, password });
 	};
 
-	handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
 
-		this.setState({ [name]: value });
+		setState(prevState => ({ ...prevState, [name]: value }));
 	};
 
-	render() {
-		return (
-			<SignUpContainer>
-				<SignUpTitle>Don't have an account?</SignUpTitle>
-				<span>Sign up now</span>
-				<form onSubmit={this.handleSubmit} className='sign-up-form'>
-					<FormInput
-						id='text'
-						type='text'
-						name='displayName'
-						value={this.state.displayName}
-						label='display name'
-						handleChange={this.handleChange}
-						required
-					/>
-					<FormInput
-						id='email'
-						type='email'
-						name='email'
-						value={this.state.email}
-						label='email'
-						handleChange={this.handleChange}
-						required
-					/>
-					<FormInput
-						id='password'
-						type='password'
-						name='password'
-						value={this.state.password}
-						label='password'
-						handleChange={this.handleChange}
-						required
-					/>
-					<FormInput
-						id='confirmPassword'
-						type='password'
-						name='confirmPassword'
-						value={this.state.confirmPassword}
-						label='confirm password'
-						handleChange={this.handleChange}
-						required
-					/>
+	return (
+		<SignUpContainer>
+			<SignUpTitle>Don't have an account?</SignUpTitle>
+			<span>Sign up now</span>
+			<form onSubmit={handleSubmit} className='sign-up-form'>
+				<FormInput
+					id='text'
+					type='text'
+					name='displayName'
+					value={state.displayName}
+					label='display name'
+					handleChange={handleChange}
+					required
+				/>
+				<FormInput
+					id='email'
+					type='email'
+					name='email'
+					value={state.email}
+					label='email'
+					handleChange={handleChange}
+					required
+				/>
+				<FormInput
+					id='password'
+					type='password'
+					name='password'
+					value={state.password}
+					label='password'
+					handleChange={handleChange}
+					required
+				/>
+				<FormInput
+					id='confirmPassword'
+					type='password'
+					name='confirmPassword'
+					value={state.confirmPassword}
+					label='confirm password'
+					handleChange={handleChange}
+					required
+				/>
 
-					<Button type='submit'>SIGN UP</Button>
-				</form>
-			</SignUpContainer>
-		);
-	}
-}
+				<Button type='submit'>SIGN UP</Button>
+			</form>
+		</SignUpContainer>
+	);
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+	emailSignUpStart: (credentials: SignUpCredentials) =>
+		dispatch(signUpStart(credentials))
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);
 
 interface SignUpState {
 	displayName: string;
 	email: string;
 	password: string;
 	confirmPassword: SignUpState['password'];
+}
+
+interface SignUpProps {
+	emailSignUpStart: (credentials: SignUpCredentials) => void;
 }

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { addCartItem } from '../../../Redux/Cart/CartActions';
+import { addCartItem } from '../../../Redux/Cart/Cart.Actions';
 import Button from '../../Button/Button';
 import {
 	CollectionItemContainer,

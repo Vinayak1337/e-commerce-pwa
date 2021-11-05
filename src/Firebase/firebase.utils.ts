@@ -57,9 +57,9 @@ export const addCollectionAndDocs = async (
 };
 
 export const convertCollectionsSnapshotToMap = (
-	collections: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
+	snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
 ) => {
-	const transformedCollections = collections.docs.map(
+	const transformedCollections = snapshot.docs.map(
 		(doc: firebase.firestore.DocumentData) => {
 			const { title, items } = doc.data();
 
@@ -83,8 +83,17 @@ firebase.initializeApp(config);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const getUserAuth = () => {
+	return new Promise((resolve, reject) => {
+		const unsubscribe = auth.onAuthStateChanged(userAuth => {
+			unsubscribe();
+			resolve(userAuth);
+		}, reject);
+	});
+};
+
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default firebase;

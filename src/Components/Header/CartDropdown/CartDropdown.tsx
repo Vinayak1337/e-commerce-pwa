@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import { toggleDropdown } from '../../../Redux/Cart/CartActions';
+import { toggleDropdown } from '../../../Redux/Cart/Cart.Actions';
 import Button from '../../Button/Button';
 import CartItem from '../CartItem/CartItem';
 import {

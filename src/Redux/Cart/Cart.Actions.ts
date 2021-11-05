@@ -3,7 +3,7 @@ import {
 	CLEAR_CART,
 	REMOVE_CART_ITEM,
 	SET_DROPDOWN_VISIBILITY
-} from './CartConstants';
+} from './Cart.Constants';
 
 export const toggleDropdown = () => ({
 	type: SET_DROPDOWN_VISIBILITY

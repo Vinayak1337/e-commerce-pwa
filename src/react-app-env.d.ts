@@ -39,6 +39,8 @@ type CartItem = Item & {
 interface ShopReducer {
 	sections: Section[];
 	collections: null | Collections;
+	isFetching: Boolean;
+	errorMessage?: string;
 }
 
 interface Section {
@@ -70,4 +72,15 @@ interface Collections {
 		items: Item[];
 		id: string;
 	};
+}
+
+interface Credentials {
+	email: string;
+	password: string;
+}
+
+interface SignUpCredentials {
+	email: string;
+	password: string;
+	displayName?: string;
 }

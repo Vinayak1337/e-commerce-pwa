@@ -1,28 +1,18 @@
 import { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router-dom';
-import { Dispatch } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import CollectionOverview from '../../Components/Shop/CollectionOverview/CollectionOverview';
-import {
-	convertCollectionsSnapshotToMap,
-	firestore
-} from '../../Firebase/firebase.utils';
-import { updateCollection } from '../../Redux/Shop/ShopActions';
+import { fetchCollectionsStart } from '../../Redux/Shop/Shop.Actions';
 import Collection from '../Collection/Collection';
 
 const Shop: FC<ShopProps & RouteComponentProps> = ({
 	match,
-	setCollections
+	fetchCollections
 }) => {
 	useEffect(() => {
-		const collectionRef = firestore.collection('collections');
-
-		collectionRef.onSnapshot(async snapshot => {
-			const collection = convertCollectionsSnapshotToMap(snapshot);
-
-			setCollections(collection);
-		});
-	}, [setCollections]);
+		fetchCollections();
+	}, [fetchCollections]);
 
 	return (
 		<div className='shop-page'>
@@ -32,13 +22,14 @@ const Shop: FC<ShopProps & RouteComponentProps> = ({
 	);
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	setCollections: (collections: Collections) =>
-		dispatch(updateCollection(collections))
+const mapDispatchToProps = (
+	dispatch: ThunkDispatch<any, any, any>
+) => ({
+	fetchCollections: () => dispatch(fetchCollectionsStart())
 });
 
 export default connect(null, mapDispatchToProps)(Shop);
 
 interface ShopProps {
-	setCollections: (collections: Collections) => void;
+	fetchCollections: () => void;
 }

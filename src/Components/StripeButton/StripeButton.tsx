@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { connect } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout';
 import { Dispatch } from 'redux';
-import { clearCart } from '../../Redux/Cart/CartActions';
+import { clearCart } from '../../Redux/Cart/Cart.Actions';
 
 const StripeButton: FC<StripeButtonProps> = ({ price, clearCart }) => {
 	const priceForStripe = price * 100;
