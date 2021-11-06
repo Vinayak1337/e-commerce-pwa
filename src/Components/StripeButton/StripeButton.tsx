@@ -1,17 +1,17 @@
 import { FC } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout';
-import { Dispatch } from 'redux';
 import { clearCart } from '../../Redux/Cart/Cart.Actions';
 
-const StripeButton: FC<StripeButtonProps> = ({ price, clearCart }) => {
+const StripeButton: FC<StripeButtonProps> = ({ price }) => {
+	const dispatch = useDispatch();
+
 	const priceForStripe = price * 100;
 	const publishKey =
 		'pk_test_51JcpZwSFZRsqIAib9v3Zgnl8PCOHx8wWe1Q07papDfEAn9hfAVhxtpzXzHFecn6CZ4gp5ntHrRydCnS3MVhMQyTt00EEqYFjTa';
 
-	const onToken = (token: any) => {
-		console.log(token);
-		clearCart();
+	const onToken = (_token: any) => {
+		dispatch(clearCart());
 		alert('Payment Successful');
 	};
 
@@ -31,13 +31,8 @@ const StripeButton: FC<StripeButtonProps> = ({ price, clearCart }) => {
 	);
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	clearCart: () => dispatch(clearCart())
-});
-
-export default connect(null, mapDispatchToProps)(StripeButton);
+export default StripeButton;
 
 interface StripeButtonProps {
 	price: number;
-	clearCart: () => void;
 }

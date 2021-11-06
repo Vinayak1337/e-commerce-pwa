@@ -1,7 +1,6 @@
 import { FC } from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { toggleDropdown } from '../../../Redux/Cart/Cart.Actions';
 import Button from '../../Button/Button';
 import CartItem from '../CartItem/CartItem';
@@ -11,11 +10,11 @@ import {
 	EmptyCartLabel
 } from './CartDropdown.styled';
 
-const CartDropdown: FC<CartDropdownProps & RouteComponentProps> = ({
-	items,
-	toggleDropdown,
-	history
-}) => {
+const CartDropdown: FC = () => {
+	const items = useSelector((state: RootState) => state.cartReducer.cartItems);
+	const history = useHistory();
+	const dispatch = useDispatch();
+
 	return (
 		<CartDropdownContainer>
 			<CartDropdownItemsContainer>
@@ -28,7 +27,7 @@ const CartDropdown: FC<CartDropdownProps & RouteComponentProps> = ({
 			<Button
 				onClick={() => {
 					history.push('/checkout');
-					toggleDropdown();
+					dispatch(toggleDropdown());
 				}}>
 				CHECKOUT
 			</Button>
@@ -36,19 +35,4 @@ const CartDropdown: FC<CartDropdownProps & RouteComponentProps> = ({
 	);
 };
 
-const mapStateToProps = (state: RootState) => ({
-	items: state.cartReducer.cartItems
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	toggleDropdown: () => dispatch(toggleDropdown())
-});
-
-export default withRouter(
-	connect(mapStateToProps, mapDispatchToProps)(CartDropdown)
-);
-
-interface CartDropdownProps {
-	items: CartItem[];
-	toggleDropdown: () => void;
-}
+export default CartDropdown;

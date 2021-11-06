@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	LogoutIcon,
 	LoginIcon,
@@ -10,18 +10,21 @@ import {
 import Logo from '../Logo/Logo';
 import CartLogo from '../CartLogo/CartLogo';
 import CartDropdown from '../CartDropdown/CartDropdown';
-import { Dispatch } from 'redux';
 import { toggleDropdown } from '../../../Redux/Cart/Cart.Actions';
 import { NavbarContainer, OptionsContainer } from './Navbar.styled';
 import { signOutStart } from '../../../Redux/User/User.Actions';
 
-const Navbar: FC<HeaderProps> = ({
-	cartItems,
-	user,
-	dropdownHidden,
-	toggleDropdown,
-	signOut
-}) => {
+const Navbar: FC = () => {
+	const { user, dropdownHidden, cartItems } = useSelector(
+		(state: RootState) => ({
+			user: state.userReducer.user,
+			dropdownHidden: state.cartReducer.dropdownHidden,
+			cartItems: state.cartReducer.cartItems
+		})
+	);
+
+	const dispatch = useDispatch();
+
 	const getItemCount = useMemo(
 		() => cartItems.reduce((prevValue, item) => prevValue + item.quantity, 0),
 		[cartItems]
@@ -36,37 +39,21 @@ const Navbar: FC<HeaderProps> = ({
 				{user ? (
 					<Logo
 						linkTo='/signin'
-						handleClick={signOut}
+						handleClick={() => dispatch(signOutStart())}
 						label='SIGN OUT'
 						Icon={LogoutIcon}
 					/>
 				) : (
 					<Logo linkTo='/signin' label='SIGN IN' Icon={LoginIcon} />
 				)}
-				<CartLogo itemCount={getItemCount} handleClick={toggleDropdown} />
+				<CartLogo
+					itemCount={getItemCount}
+					handleClick={() => dispatch(toggleDropdown())}
+				/>
 			</OptionsContainer>
 			{!dropdownHidden && <CartDropdown />}
 		</NavbarContainer>
 	);
 };
 
-const mapStateToProps = (state: RootState) => ({
-	user: state.userReducer.user,
-	dropdownHidden: state.cartReducer.dropdownHidden,
-	cartItems: state.cartReducer.cartItems
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	toggleDropdown: () => dispatch(toggleDropdown()),
-	signOut: () => dispatch(signOutStart())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
-
-interface HeaderProps {
-	user: User | null;
-	cartItems: CartItem[];
-	dropdownHidden: boolean;
-	signOut: () => void;
-	toggleDropdown: () => void;
-}
+export default Navbar;

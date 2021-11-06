@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import CheckoutItem from '../../Components/Checkout/CheckoutItem/CheckoutItem';
 import StripeButton from '../../Components/StripeButton/StripeButton';
 import {
@@ -10,7 +10,11 @@ import {
 	CheckoutTestWarning
 } from './Checkout.styled';
 
-const Checkout: FC<CheckoutProps> = ({ cartItems }) => {
+const Checkout: FC = () => {
+	const cartItems = useSelector(
+		(state: RootState) => state.cartReducer.cartItems
+	);
+
 	const getTotalPrice = useMemo(
 		() =>
 			cartItems.reduce(
@@ -60,12 +64,4 @@ const Checkout: FC<CheckoutProps> = ({ cartItems }) => {
 	);
 };
 
-const mapStateToProps = (state: RootState) => ({
-	cartItems: state.cartReducer.cartItems
-});
-
-export default connect(mapStateToProps)(Checkout);
-
-interface CheckoutProps {
-	cartItems: CartItem[];
-}
+export default Checkout;

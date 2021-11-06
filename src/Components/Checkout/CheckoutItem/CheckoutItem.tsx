@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
 import { addCartItem, removeCartItem } from '../../../Redux/Cart/Cart.Actions';
 import {
 	CheckoutItemContainer,
@@ -13,16 +12,16 @@ import {
 	CheckoutItemRemoveButton
 } from './CheckoutItem.stled';
 
-const CheckoutItem: FC<CheckoutItemProps> = ({
-	item,
-	removeCartItem,
-	addCartItem
-}) => {
-	const handleClickRemove = () => removeCartItem(item);
+const CheckoutItem: FC<CheckoutItemProps> = ({ item }) => {
+	const dispatch = useDispatch();
 
-	const handleClickRemoveOne = () => removeCartItem({ ...item, quantity: 1 });
+	const handleClickRemove = () => dispatch(removeCartItem(item));
 
-	const handleClickAddOne = () => addCartItem({ ...item, quantity: 1 });
+	const handleClickRemoveOne = () =>
+		dispatch(removeCartItem({ ...item, quantity: 1 }));
+
+	const handleClickAddOne = () =>
+		dispatch(addCartItem({ ...item, quantity: 1 }));
 
 	const { imageUrl, name, quantity, price } = item;
 
@@ -49,15 +48,8 @@ const CheckoutItem: FC<CheckoutItemProps> = ({
 	);
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	removeCartItem: (item: CartItem) => dispatch(removeCartItem(item)),
-	addCartItem: (item: CartItem) => dispatch(addCartItem(item))
-});
-
-export default connect(null, mapDispatchToProps)(CheckoutItem);
+export default CheckoutItem;
 
 interface CheckoutItemProps {
 	item: CartItem;
-	removeCartItem: (item: CartItem) => void;
-	addCartItem: (item: CartItem) => void;
 }

@@ -1,10 +1,14 @@
 import { FC } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CollectionPreview } from '..';
 import Spinner from '../../Spinner/Spinner';
 import { CollectionOverviewContainer } from './CollectionOverview.styled';
 
-const CollectionOverview: FC<CollectionOverviewProps> = ({ collections }) => {
+const CollectionOverview: FC = () => {
+	const collections = useSelector(
+		(state: RootState) => state.shopReducer.collections
+	);
+
 	return (
 		<CollectionOverviewContainer hasSpinner={collections ? '' : 'yes'}>
 			{!collections ? (
@@ -24,12 +28,4 @@ const CollectionOverview: FC<CollectionOverviewProps> = ({ collections }) => {
 	);
 };
 
-const mapStateToProps = (state: RootState) => ({
-	collections: state.shopReducer.collections
-});
-
-export default connect(mapStateToProps)(CollectionOverview);
-
-interface CollectionOverviewProps {
-	collections: null | Collections;
-}
+export default CollectionOverview;

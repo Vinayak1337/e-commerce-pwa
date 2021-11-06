@@ -1,9 +1,13 @@
 import { FC } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import MenuItem from '../MenuItem/MenuItem';
 import { DirectoryContainer } from './Directory.styled';
 
-const Directory: FC<DirectoryProps> = ({ sections }) => {
+const Directory: FC = () => {
+	const sections = useSelector(
+		(state: RootState) => state.shopReducer.sections
+	);
+
 	return (
 		<DirectoryContainer>
 			{sections.map(section => {
@@ -13,12 +17,4 @@ const Directory: FC<DirectoryProps> = ({ sections }) => {
 	);
 };
 
-const mapStateToProps = (state: RootState) => ({
-	sections: state.shopReducer.sections
-});
-
-export default connect(mapStateToProps)(Directory);
-
-interface DirectoryProps {
-	sections: Section[];
-}
+export default Directory;

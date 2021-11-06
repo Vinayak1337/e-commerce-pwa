@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { ErrorPage } from '..';
 import { CollectionItem } from '../../Components/Shop';
 import {
@@ -9,11 +9,14 @@ import {
 	CollectionTitle
 } from './Collection.styled';
 
-type CollectionRCProps = RouteComponentProps<{ collectionId: string }>;
+const Collection: FC = () => {
+	const { collectionId } = useParams<{ collectionId: string }>();
+	const collection = useSelector((state: RootState) => {
+		const collections = state.shopReducer.collections;
+		if (!collections) return null;
+		return collections[collectionId];
+	});
 
-const Collection: FC<CollectionRCProps & CollectionProps> = ({
-	collection
-}) => {
 	if (!collection) return <ErrorPage />;
 
 	const { title, items } = collection;
@@ -29,16 +32,4 @@ const Collection: FC<CollectionRCProps & CollectionProps> = ({
 	);
 };
 
-const mapStateToProps = (state: RootState, props: CollectionRCProps) => {
-	const id = props.match.params.collectionId;
-
-	const collections = state.shopReducer.collections;
-	if (!collections) return null;
-	return { collection: collections[id] };
-};
-
-export default connect(mapStateToProps)(Collection);
-
-interface CollectionProps {
-	collection: Collection | null;
-}
+export default Collection;

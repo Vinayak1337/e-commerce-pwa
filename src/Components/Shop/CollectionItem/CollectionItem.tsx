@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
 import { addCartItem } from '../../../Redux/Cart/Cart.Actions';
 import Button from '../../Button/Button';
 import {
@@ -11,14 +10,11 @@ import {
 	CollectionItemImage
 } from './CollectionItem.styled';
 
-const CollectionItem: FC<CollectionItemProps> = ({
-	item,
-	addCartItem,
-	fullWidth
-}) => {
+const CollectionItem: FC<CollectionItemProps> = ({ item, fullWidth }) => {
+	const dispatch = useDispatch();
 	const { imageUrl, name, price } = item;
 
-	const handleClick = () => addCartItem({ ...item, quantity: 1 });
+	const handleClick = () => dispatch(addCartItem({ ...item, quantity: 1 }));
 
 	return (
 		<CollectionItemContainer fullWidth={fullWidth}>
@@ -34,14 +30,9 @@ const CollectionItem: FC<CollectionItemProps> = ({
 	);
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	addCartItem: (cartItem: CartItem) => dispatch(addCartItem(cartItem))
-});
-
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default CollectionItem;
 
 interface CollectionItemProps {
 	item: Item;
-	addCartItem: (cartItem: CartItem) => void;
 	fullWidth?: boolean;
 }

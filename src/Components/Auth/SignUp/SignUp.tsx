@@ -1,12 +1,11 @@
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
 import { signUpStart } from '../../../Redux/User/User.Actions';
 import Button from '../../Button/Button';
 import FormInput from '../FormInput/FormInput';
 import { SignUpContainer, SignUpTitle } from './SignUp.styled';
 
-const SignUp: FC<SignUpProps> = ({ emailSignUpStart }) => {
+const SignUp: FC = () => {
 	const [state, setState] = useState<SignUpState>({
 		displayName: '',
 		email: '',
@@ -14,14 +13,16 @@ const SignUp: FC<SignUpProps> = ({ emailSignUpStart }) => {
 		confirmPassword: ''
 	});
 
+	const dispatch = useDispatch();
+
+	const { displayName, email, password, confirmPassword } = state;
+
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		const { displayName, email, password, confirmPassword } = state;
-
 		if (password !== confirmPassword) return alert('Passwords do not match');
 
-		emailSignUpStart({ displayName, email, password });
+		dispatch(signUpStart({ displayName, email, password }));
 	};
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +40,7 @@ const SignUp: FC<SignUpProps> = ({ emailSignUpStart }) => {
 					id='text'
 					type='text'
 					name='displayName'
-					value={state.displayName}
+					value={displayName}
 					label='display name'
 					handleChange={handleChange}
 					required
@@ -48,7 +49,7 @@ const SignUp: FC<SignUpProps> = ({ emailSignUpStart }) => {
 					id='email'
 					type='email'
 					name='email'
-					value={state.email}
+					value={email}
 					label='email'
 					handleChange={handleChange}
 					required
@@ -57,7 +58,7 @@ const SignUp: FC<SignUpProps> = ({ emailSignUpStart }) => {
 					id='password'
 					type='password'
 					name='password'
-					value={state.password}
+					value={password}
 					label='password'
 					handleChange={handleChange}
 					required
@@ -66,7 +67,7 @@ const SignUp: FC<SignUpProps> = ({ emailSignUpStart }) => {
 					id='confirmPassword'
 					type='password'
 					name='confirmPassword'
-					value={state.confirmPassword}
+					value={confirmPassword}
 					label='confirm password'
 					handleChange={handleChange}
 					required
@@ -78,20 +79,11 @@ const SignUp: FC<SignUpProps> = ({ emailSignUpStart }) => {
 	);
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	emailSignUpStart: (credentials: SignUpCredentials) =>
-		dispatch(signUpStart(credentials))
-});
-
-export default connect(null, mapDispatchToProps)(SignUp);
+export default SignUp;
 
 interface SignUpState {
 	displayName: string;
 	email: string;
 	password: string;
 	confirmPassword: SignUpState['password'];
-}
-
-interface SignUpProps {
-	emailSignUpStart: (credentials: SignUpCredentials) => void;
 }

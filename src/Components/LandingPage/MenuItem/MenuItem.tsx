@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import {
 	MenuItemBGImage,
 	MenuItemContainer,
@@ -8,11 +8,10 @@ import {
 	MenuItemTitle
 } from './MenuItem.styled';
 
-const MenuItem: FC<MenuItemProps & RouteComponentProps> = ({
-	section,
-	history,
-	match
-}) => {
+const MenuItem: FC<MenuItemProps> = ({ section }) => {
+	const history = useHistory();
+	const match = useRouteMatch();
+
 	const { title, imageUrl, size, linkUrl } = section;
 
 	return (
@@ -28,7 +27,7 @@ const MenuItem: FC<MenuItemProps & RouteComponentProps> = ({
 	);
 };
 
-export default withRouter(MenuItem);
+export default MenuItem;
 
 interface MenuItemProps {
 	section: Section;

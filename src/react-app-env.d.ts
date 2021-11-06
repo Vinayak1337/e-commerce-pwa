@@ -11,7 +11,7 @@ interface UserSnapshot {
 	data: () => User;
 }
 interface UserReducer {
-	user: User;
+	user: User | null;
 }
 
 interface User {

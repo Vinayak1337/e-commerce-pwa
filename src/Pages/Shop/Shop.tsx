@@ -1,18 +1,17 @@
 import { FC, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Route, RouteComponentProps } from 'react-router-dom';
-import { ThunkDispatch } from 'redux-thunk';
+import { useDispatch } from 'react-redux';
+import { Route, useRouteMatch } from 'react-router-dom';
 import CollectionOverview from '../../Components/Shop/CollectionOverview/CollectionOverview';
 import { fetchCollectionsStart } from '../../Redux/Shop/Shop.Actions';
 import Collection from '../Collection/Collection';
 
-const Shop: FC<ShopProps & RouteComponentProps> = ({
-	match,
-	fetchCollections
-}) => {
+const Shop: FC = () => {
+	const dispatch = useDispatch();
+	const match = useRouteMatch();
+
 	useEffect(() => {
-		fetchCollections();
-	}, [fetchCollections]);
+		dispatch(fetchCollectionsStart());
+	}, [dispatch]);
 
 	return (
 		<div className='shop-page'>
@@ -22,14 +21,4 @@ const Shop: FC<ShopProps & RouteComponentProps> = ({
 	);
 };
 
-const mapDispatchToProps = (
-	dispatch: ThunkDispatch<any, any, any>
-) => ({
-	fetchCollections: () => dispatch(fetchCollectionsStart())
-});
-
-export default connect(null, mapDispatchToProps)(Shop);
-
-interface ShopProps {
-	fetchCollections: () => void;
-}
+export default Shop;
